@@ -156,6 +156,31 @@ section{padding:clamp(76px,12vh,130px) 0 0;position:relative;z-index:2}
 .eye-g .pup{fill:#eef1f6}
 .r-row:hover .eye-g .pup{fill:url(#iriGrad)}
 
+/* ------------ work ------------ */
+.work-lead{margin-top:34px;font-family:"Instrument Serif",serif;font-style:italic;font-size:clamp(1.25rem,2.6vw,1.8rem);
+  color:var(--text);max-width:760px;line-height:1.35}
+.work-item{padding:clamp(38px,6vh,60px) 0;border-bottom:1px solid var(--hair)}
+.work-head{display:flex;align-items:baseline;gap:18px;flex-wrap:wrap}
+.work-title{font-weight:700;font-size:clamp(2rem,5.5vw,3.6rem);letter-spacing:-.02em;line-height:1}
+.work-tags{display:flex;gap:8px;flex-wrap:wrap}
+.wtag{font-family:"IBM Plex Mono",monospace;font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;
+  padding:5px 11px;border-radius:999px;border:1px solid var(--hair-strong);color:var(--muted)}
+.wtag.hot{border:none;background:var(--iri);color:#0a0c11;font-weight:500}
+.work-hook{margin-top:16px;font-family:"Instrument Serif",serif;font-style:italic;
+  font-size:clamp(1.15rem,2.4vw,1.6rem);line-height:1.3;background:var(--iri);
+  -webkit-background-clip:text;background-clip:text;color:transparent;max-width:720px}
+.work-body{margin-top:14px;color:var(--muted);font-size:.96rem;max-width:680px;font-family:"Inter",system-ui,sans-serif}
+.chips{margin-top:22px;display:flex;gap:9px;flex-wrap:wrap}
+.chip{font-family:"IBM Plex Mono",monospace;font-size:.68rem;letter-spacing:.08em;color:var(--text);
+  padding:7px 13px;border:1px solid var(--hair);border-radius:8px;background:rgba(14,17,24,.6)}
+.chip b{color:var(--teal);font-weight:500}
+.work-links{margin-top:22px;display:flex;gap:10px 26px;flex-wrap:wrap;
+  font-family:"IBM Plex Mono",monospace;font-size:.72rem;letter-spacing:.12em}
+.work-links a{text-decoration:none;color:var(--text);text-transform:uppercase;
+  border-bottom:1px solid var(--hair-strong);padding-bottom:3px;transition:color .2s ease,border-color .2s ease}
+.work-links a:hover{color:var(--teal);border-color:var(--teal)}
+.work-links .soon{color:var(--muted);text-transform:uppercase}
+
 /* ------------ ethos ------------ */
 .ethos-list{counter-reset:e}
 .ethos-line{position:relative;padding:clamp(30px,4.5vh,44px) 0 clamp(30px,4.5vh,44px) clamp(54px,7vw,96px);
@@ -219,6 +244,7 @@ footer{margin-top:clamp(80px,14vh,150px);border-top:1px solid var(--hair-strong)
     </a>
     <nav class="menu">
       <a href="#research">Research</a>
+      <a href="#work">Work</a>
       <a href="#ethos">Ethos</a>
       <a href="#people">People</a>
       <a href="https://github.com/argus-lab" target="_blank" rel="noopener">GitHub ↗</a>
@@ -286,11 +312,72 @@ footer{margin-top:clamp(80px,14vh,150px);border-top:1px solid var(--hair-strong)
     </div>
   </section>
 
-  <!-- 02 ETHOS -->
-  <section id="ethos">
+
+  <!-- 02 WORK -->
+  <section id="work">
     <div class="wrap">
       <div class="sec-head">
         <span class="sec-num">02</span>
+        <h2 class="sec-title">Work</h2>
+        <span class="sec-note">two testbeds, one thesis</span>
+      </div>
+      <p class="work-lead">The same loop — see, act, verify — instantiated in the two environments
+        where real work happens: the browser and the desktop.</p>
+
+      <div class="work-item">
+        <div class="work-head">
+          <span class="work-title">CAP-Bench</span>
+          <span class="work-tags"><span class="wtag hot">COLM 2026</span><span class="wtag">Open source</span><span class="wtag">Live web</span></span>
+        </div>
+        <p class="work-hook">Can an agent plan a trip across five real websites — and prove that it did?</p>
+        <p class="work-body">A benchmark of cross-site tasks on live websites, built by decomposing sites into
+          structured cards and recomposing them into realistic workflows. Every task is scored by a verifiable
+          agent-as-a-judge: a rubric tree of independently checkable execution and perception criteria,
+          grounded in cited sources. State-of-the-art agents pass fewer than one task in ten.</p>
+        <div class="chips">
+          <span class="chip"><b>420</b> tasks</span>
+          <span class="chip"><b>108</b> live websites</span>
+          <span class="chip"><b>24</b> domains</span>
+          <span class="chip">rubric-tree judge</span>
+          <span class="chip">public leaderboard</span>
+        </div>
+        <div class="work-links">
+          <a href="https://github.com/argus-lab/CAP-Bench" target="_blank" rel="noopener">Code</a>
+          <a href="https://warriorxu0302.github.io/CAP-Bench/" target="_blank" rel="noopener">Project</a>
+          <a href="https://huggingface.co/datasets/Warrior0302/CAP-Bench" target="_blank" rel="noopener">Dataset</a>
+          <a href="https://warriorxu0302.github.io/CAP-Bench/leaderboard.html" target="_blank" rel="noopener">Leaderboard</a>
+        </div>
+      </div>
+
+      <div class="work-item">
+        <div class="work-head">
+          <span class="work-title">Amadeus</span>
+          <span class="work-tags"><span class="wtag">In development</span><span class="wtag">Local-first</span><span class="wtag">Desktop</span></span>
+        </div>
+        <p class="work-hook">What if the operator lived on your machine — not in someone's cloud?</p>
+        <p class="work-body">A local-first desktop operator: multimodal models watch the screen, decide,
+          and act with a real mouse and keyboard. Screenshots, decisions, and execution stay on localhost.
+          Every action passes through a typed contract and a whitelisted executor, with per-step confirmation
+          and a dry-run mode that verifies the whole loop without touching your desktop.</p>
+        <div class="chips">
+          <span class="chip">unified action contract</span>
+          <span class="chip">whitelisted executor</span>
+          <span class="chip">swappable model adapters</span>
+          <span class="chip">dry-run verification</span>
+          <span class="chip"><b>3</b> platforms</span>
+        </div>
+        <div class="work-links">
+          <span class="soon">Public release coming soon</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 03 ETHOS -->
+  <section id="ethos">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="sec-num">03</span>
         <h2 class="sec-title">Ethos</h2>
         <span class="sec-note">how we work</span>
       </div>
@@ -315,11 +402,11 @@ footer{margin-top:clamp(80px,14vh,150px);border-top:1px solid var(--hair-strong)
     </div>
   </section>
 
-  <!-- 03 PEOPLE -->
+  <!-- 04 PEOPLE -->
   <section id="people">
     <div class="wrap">
       <div class="sec-head">
-        <span class="sec-num">03</span>
+        <span class="sec-num">04</span>
         <h2 class="sec-title">People</h2>
         <span class="sec-note">the eyes of argus</span>
       </div>
