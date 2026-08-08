@@ -4,188 +4,216 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>ARGUS Lab — Agents that see, act & verify</title>
-<meta name="description" content="ARGUS Lab is an independent research group building agents that see, act, and verify — from browser agents to desktop operators." />
+<meta name="description" content="ARGUS Lab is an independent research group building agents that see, act, and verify." />
 <meta property="og:title" content="ARGUS Lab" />
 <meta property="og:description" content="Agents that see, act & verify. Lost, but moving forward." />
-<link rel="icon" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><circle cx="32" cy="32" r="26" fill="none" stroke="%2315171c" stroke-width="3"/><circle cx="32" cy="32" r="15" fill="none" stroke="%2315171c" stroke-width="2"/><circle cx="32" cy="32" r="7" fill="%230e7d87"/></svg>' />
+<link rel="icon" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="%235eead4"/><stop offset=".5" stop-color="%23a78bfa"/><stop offset="1" stop-color="%23f0b95e"/></linearGradient></defs><circle cx="32" cy="32" r="28" fill="none" stroke="url(%23g)" stroke-width="4"/><circle cx="32" cy="32" r="11" fill="url(%23g)"/></svg>' />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500&family=IBM+Plex+Mono:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet" />
 <style>
 :root{
-  --paper:#fafaf8;
-  --paper2:#f0f0ec;
-  --ink:#15171c;
-  --ink-soft:#5b6170;
-  --line:rgba(21,23,28,.16);
-  --line-strong:rgba(21,23,28,.55);
-  --accent:#0e7d87;
-  --maxw:1280px;
+  --bg:#0a0c11;
+  --bg-2:#0e1118;
+  --text:#eef1f6;
+  --muted:#8b93a3;
+  --hair:rgba(238,241,246,.09);
+  --hair-strong:rgba(238,241,246,.22);
+  --teal:#5eead4;
+  --violet:#a78bfa;
+  --gold:#f0b95e;
+  --iri:linear-gradient(100deg,#5eead4 0%,#67e8f9 28%,#a78bfa 58%,#f0b95e 100%);
+  --maxw:1240px;
 }
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
 body{
-  background:var(--paper);color:var(--ink);
-  font-family:"Inter",system-ui,sans-serif;font-size:16px;line-height:1.6;
+  background:var(--bg);color:var(--text);
+  font-family:"Space Grotesk",system-ui,sans-serif;font-size:16px;line-height:1.6;
   -webkit-font-smoothing:antialiased;overflow-x:hidden;
 }
-/* paper grain */
-body::before{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.35;
-  background-image:url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="240" height="240"><filter id="n"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" stitchTiles="stitch"/><feColorMatrix type="saturate" values="0"/><feComponentTransfer><feFuncA type="linear" slope="0.05"/></feComponentTransfer></filter><rect width="240" height="240" filter="url(%23n)"/></svg>');}
-::selection{background:var(--accent);color:#fafaf8}
+/* film grain — kills gradient banding, adds texture */
+body::after{content:"";position:fixed;inset:0;z-index:90;pointer-events:none;opacity:.28;mix-blend-mode:overlay;
+  background-image:url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="180" height="180"><filter id="n"><feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" stitchTiles="stitch"/></filter><rect width="180" height="180" filter="url(%23n)" opacity="0.55"/></svg>');}
+::selection{background:#a78bfa;color:#0a0c11}
 a{color:inherit}
 img{max-width:100%}
-.wrap{max-width:var(--maxw);margin:0 auto;padding:0 clamp(20px,4vw,56px);position:relative;z-index:1}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 clamp(20px,4vw,52px);position:relative;z-index:2}
 .mono{font-family:"IBM Plex Mono",monospace}
+.serif{font-family:"Instrument Serif",serif;font-style:italic;font-weight:400}
+.iri-text{background:var(--iri);-webkit-background-clip:text;background-clip:text;color:transparent}
 
-/* ---------------- header ---------------- */
-header{position:fixed;top:0;left:0;right:0;z-index:60;
-  border-bottom:1px solid var(--line);
-  background:color-mix(in srgb, var(--paper) 88%, transparent);
-  backdrop-filter:blur(8px)}
+/* ------------ aurora field ------------ */
+.aurora{position:fixed;inset:-20%;z-index:0;pointer-events:none;filter:blur(90px);opacity:.5}
+.aurora i{position:absolute;border-radius:50%}
+.aurora .a1{width:44vw;height:44vw;left:8%;top:-6%;background:radial-gradient(circle,rgba(94,234,212,.20),transparent 65%);animation:drift1 26s ease-in-out infinite alternate}
+.aurora .a2{width:38vw;height:38vw;right:2%;top:16%;background:radial-gradient(circle,rgba(167,139,250,.20),transparent 65%);animation:drift2 32s ease-in-out infinite alternate}
+.aurora .a3{width:30vw;height:30vw;left:42%;top:44%;background:radial-gradient(circle,rgba(240,185,94,.12),transparent 65%);animation:drift1 40s ease-in-out infinite alternate-reverse}
+@keyframes drift1{from{transform:translate(0,0)}to{transform:translate(6vw,4vh)}}
+@keyframes drift2{from{transform:translate(0,0)}to{transform:translate(-5vw,6vh)}}
+@media (prefers-reduced-motion: reduce){.aurora i{animation:none}}
+
+/* ------------ header ------------ */
+header{position:fixed;top:0;left:0;right:0;z-index:70;border-bottom:1px solid var(--hair);
+  background:rgba(10,12,17,.72);backdrop-filter:blur(14px)}
 .bar{display:flex;justify-content:space-between;align-items:center;height:58px}
-.wordmark{display:flex;align-items:center;gap:10px;text-decoration:none;
-  font-family:"Space Grotesk",sans-serif;font-weight:700;letter-spacing:.14em;font-size:.95rem}
-.wordmark .mini-eye{width:26px;height:26px}
-nav.menu{display:flex;gap:clamp(14px,2.4vw,34px);font-family:"IBM Plex Mono",monospace;font-size:.72rem;letter-spacing:.12em}
-nav.menu a{text-decoration:none;color:var(--ink-soft);text-transform:uppercase;padding:4px 0;border-bottom:1px solid transparent}
-nav.menu a:hover{color:var(--ink);border-bottom-color:var(--accent)}
+.wordmark{display:flex;align-items:center;gap:11px;text-decoration:none;font-weight:700;
+  letter-spacing:.16em;font-size:.9rem}
+nav.menu{display:flex;gap:clamp(14px,2.4vw,34px);font-family:"IBM Plex Mono",monospace;font-size:.7rem;letter-spacing:.14em}
+nav.menu a{text-decoration:none;color:var(--muted);text-transform:uppercase;padding:4px 0;position:relative}
+nav.menu a::after{content:"";position:absolute;left:0;right:100%;bottom:0;height:1px;background:var(--iri);transition:right .25s ease}
+nav.menu a:hover{color:var(--text)}
+nav.menu a:hover::after{right:0}
 @media(max-width:700px){nav.menu{display:none}}
 
-/* ---------------- hero ---------------- */
-.hero{padding:clamp(120px,16vh,180px) 0 0;position:relative}
-.kicker{font-family:"IBM Plex Mono",monospace;font-size:.72rem;letter-spacing:.22em;color:var(--ink-soft);
-  text-transform:uppercase;display:flex;gap:1.6em;flex-wrap:wrap}
-.kicker b{color:var(--accent);font-weight:500}
-.hero-grid{display:grid;grid-template-columns:1fr auto;gap:clamp(20px,4vw,60px);align-items:end;margin-top:18px}
-@media(max-width:900px){.hero-grid{grid-template-columns:1fr}}
-h1.display{
-  font-family:"Space Grotesk",sans-serif;font-weight:700;
-  font-size:clamp(4.6rem,15.5vw,13.5rem);
-  line-height:.86;letter-spacing:-.035em;text-transform:uppercase;
-}
-h1.display .row2{display:flex;align-items:baseline;gap:.18em}
-h1.display .lab{
-  color:transparent;-webkit-text-stroke:2px var(--ink);
-}
-.hero-side{padding-bottom:clamp(6px,1.4vw,22px)}
-.iris-wrap{width:clamp(200px,24vw,320px)}
-.tag-row{display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:14px;
-  border-top:1px solid var(--line-strong);margin-top:clamp(22px,3.2vw,40px);padding:16px 0 0}
-.tagline{font-family:"Space Grotesk",sans-serif;font-weight:500;font-size:clamp(1.05rem,2.2vw,1.5rem)}
-.tagline em{font-style:normal;color:var(--accent)}
-.motto{font-family:"IBM Plex Mono",monospace;font-style:italic;font-size:.8rem;color:var(--ink-soft)}
-.myth{max-width:560px;margin-top:26px;color:var(--ink-soft);font-size:.95rem}
-.myth strong{color:var(--ink);font-weight:600}
+/* ------------ hero ------------ */
+.hero{min-height:100svh;display:flex;flex-direction:column;justify-content:center;position:relative;padding:96px 0 40px}
+.hero .kicker{display:flex;justify-content:center;gap:1.8em;flex-wrap:wrap;
+  font-family:"IBM Plex Mono",monospace;font-size:.7rem;letter-spacing:.24em;color:var(--muted);text-transform:uppercase}
+.hero .kicker b{color:var(--teal);font-weight:500}
 
-/* ticker */
-.ticker{margin-top:clamp(40px,6vh,70px);border-top:1px solid var(--line-strong);border-bottom:1px solid var(--line-strong);
-  overflow:hidden;white-space:nowrap;position:relative;z-index:1}
-.ticker-inner{display:inline-block;padding:10px 0;font-family:"IBM Plex Mono",monospace;font-size:.78rem;
-  letter-spacing:.28em;text-transform:uppercase;color:var(--ink-soft);
-  animation:tick 36s linear infinite}
-.ticker-inner b{color:var(--accent);font-weight:500}
+.stage{position:relative;display:flex;flex-direction:column;align-items:center;margin-top:clamp(18px,3vh,36px)}
+h1.display{
+  text-align:center;text-transform:uppercase;font-weight:700;
+  font-size:clamp(3.4rem,12.5vw,10.5rem);line-height:.92;letter-spacing:-.03em;
+  position:relative;z-index:3;
+}
+h1 .l2{display:block;color:transparent;-webkit-text-stroke:1.5px rgba(238,241,246,.85)}
+
+/* —— the iridescent eye —— */
+.eye{position:relative;z-index:2;width:clamp(190px,26vw,320px);aspect-ratio:1;margin:clamp(-30px,-3.5vw,-46px) auto;
+  border-radius:50%;
+}
+.eye .halo{position:absolute;inset:-34%;border-radius:50%;
+  background:radial-gradient(circle,rgba(94,234,212,.22) 0%,rgba(167,139,250,.14) 38%,transparent 68%);
+  filter:blur(18px);animation:breathe 6s ease-in-out infinite}
+.eye .ring{position:absolute;inset:-13%;border-radius:50%;border:1px solid var(--hair-strong)}
+.eye .ring::before{content:"";position:absolute;inset:-9%;border-radius:50%;border:1px dashed var(--hair)}
+.eye .iris{position:absolute;inset:0;border-radius:50%;overflow:hidden;
+  background:
+    repeating-conic-gradient(from 0deg, rgba(255,255,255,.10) 0deg .7deg, transparent .7deg 4.5deg),
+    conic-gradient(from 210deg,
+      #0d3f3a 0%, #14b8a6 9%, #67e8f9 18%, #155e75 27%,
+      #312e81 38%, #a78bfa 48%, #4c1d95 58%,
+      #92600f 68%, #f0b95e 76%, #7c4a08 84%, #0d3f3a 100%);
+  box-shadow:
+    inset 0 0 0 2px rgba(255,255,255,.08),
+    inset 0 0 60px rgba(4,6,10,.85),
+    0 0 70px rgba(103,232,249,.18),
+    0 0 130px rgba(167,139,250,.14);
+  animation:irisSpin 60s linear infinite;
+}
+@keyframes irisSpin{to{transform:rotate(360deg)}}
+@keyframes breathe{0%,100%{opacity:.8}50%{opacity:1.0}}
+.eye .iris::after{content:"";position:absolute;inset:0;border-radius:50%;
+  background:radial-gradient(circle at 34% 30%, rgba(255,255,255,.16), transparent 42%),
+             radial-gradient(circle, transparent 52%, rgba(4,6,10,.9) 100%)}
+.eye .pupil-track{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;z-index:4}
+.eye .pupil{width:31%;aspect-ratio:1;border-radius:50%;background:#05070b;
+  box-shadow:0 0 0 3px rgba(4,6,10,.6), inset 0 0 18px #000;position:relative;
+  transition:transform .08s linear}
+.eye .pupil::after{content:"";position:absolute;left:20%;top:16%;width:26%;height:26%;border-radius:50%;
+  background:rgba(255,255,255,.75);filter:blur(1px)}
+@media (prefers-reduced-motion: reduce){.eye .iris,.eye .halo{animation:none}}
+
+.hero .tagline{margin-top:clamp(20px,3vh,34px);text-align:center;z-index:3;
+  font-size:clamp(1.25rem,3vw,2.1rem);font-weight:500;letter-spacing:.01em}
+.hero .tagline .serif{font-size:1.12em}
+.hero .motto{margin-top:12px;text-align:center;font-family:"IBM Plex Mono",monospace;
+  font-size:.78rem;color:var(--muted);letter-spacing:.06em}
+.scroll-cue{position:absolute;bottom:22px;left:50%;transform:translateX(-50%);
+  font-family:"IBM Plex Mono",monospace;font-size:.64rem;letter-spacing:.3em;color:var(--muted);text-transform:uppercase}
+
+/* ------------ ticker ------------ */
+.ticker{border-top:1px solid var(--hair);border-bottom:1px solid var(--hair);overflow:hidden;white-space:nowrap;
+  position:relative;z-index:2;background:rgba(14,17,24,.5)}
+.ticker-inner{display:inline-block;padding:11px 0;font-family:"IBM Plex Mono",monospace;font-size:.72rem;
+  letter-spacing:.3em;text-transform:uppercase;color:var(--muted);animation:tick 38s linear infinite}
+.ticker-inner .sep{color:var(--gold);font-style:normal}
 @keyframes tick{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 @media (prefers-reduced-motion: reduce){.ticker-inner{animation:none}}
 
-/* ---------------- sections ---------------- */
-section{padding:clamp(64px,10vh,110px) 0 0}
-.sec-head{display:flex;align-items:baseline;gap:18px;border-bottom:1px solid var(--line-strong);padding-bottom:14px}
-.sec-num{font-family:"IBM Plex Mono",monospace;font-size:.78rem;color:var(--accent);letter-spacing:.14em}
-.sec-title{font-family:"Space Grotesk",sans-serif;font-weight:700;text-transform:uppercase;letter-spacing:.02em;
-  font-size:clamp(1.6rem,3.6vw,2.6rem);line-height:1}
-.sec-note{margin-left:auto;font-family:"IBM Plex Mono",monospace;font-size:.7rem;color:var(--ink-soft);
-  letter-spacing:.12em;text-transform:uppercase}
+/* ------------ sections ------------ */
+section{padding:clamp(76px,12vh,130px) 0 0;position:relative;z-index:2}
+.sec-head{display:flex;align-items:baseline;gap:18px;padding-bottom:16px;border-bottom:1px solid var(--hair-strong)}
+.sec-num{font-family:"IBM Plex Mono",monospace;font-size:.74rem;letter-spacing:.16em;
+  background:var(--iri);-webkit-background-clip:text;background-clip:text;color:transparent}
+.sec-title{font-weight:700;text-transform:uppercase;font-size:clamp(1.5rem,3.4vw,2.4rem);letter-spacing:.01em;line-height:1}
+.sec-note{margin-left:auto;font-family:"IBM Plex Mono",monospace;font-size:.68rem;color:var(--muted);letter-spacing:.14em;text-transform:uppercase}
 @media(max-width:700px){.sec-note{display:none}}
 
 /* research rows */
-.r-row{display:grid;grid-template-columns:110px minmax(0,1.1fr) minmax(0,1.6fr) 64px;gap:clamp(14px,3vw,44px);
-  align-items:center;padding:30px 0;border-bottom:1px solid var(--line)}
-@media(max-width:820px){.r-row{grid-template-columns:64px 1fr 44px}.r-row .r-desc{grid-column:2/4;grid-row:2;margin-top:2px}}
-.r-idx{font-family:"IBM Plex Mono",monospace;font-size:.75rem;color:var(--ink-soft);letter-spacing:.1em}
-.r-idx b{display:block;font-size:1.9rem;font-weight:500;color:var(--ink);letter-spacing:0}
-.r-name{font-family:"Space Grotesk",sans-serif;font-weight:600;font-size:clamp(1.3rem,2.6vw,1.9rem);line-height:1.1}
-.r-desc{color:var(--ink-soft);font-size:.93rem;max-width:520px}
-.r-row:hover .r-name{color:var(--accent)}
+.r-row{display:grid;grid-template-columns:96px minmax(0,1fr) minmax(0,1.5fr) 56px;gap:clamp(14px,3vw,44px);
+  align-items:center;padding:34px 8px;border-bottom:1px solid var(--hair);position:relative;transition:background .25s ease}
+.r-row:hover{background:linear-gradient(90deg,rgba(94,234,212,.05),rgba(167,139,250,.05),transparent)}
+@media(max-width:820px){.r-row{grid-template-columns:56px 1fr 44px}.r-row .r-desc{grid-column:2/4;grid-row:2;margin-top:4px}}
+.r-idx{font-family:"IBM Plex Mono",monospace;font-size:1.6rem;color:var(--muted)}
+.r-row:hover .r-idx{background:var(--iri);-webkit-background-clip:text;background-clip:text;color:transparent}
+.r-name{font-weight:600;font-size:clamp(1.35rem,2.8vw,2rem);line-height:1.05}
+.r-desc{color:var(--muted);font-size:.93rem;max-width:520px;font-family:"Inter",system-ui,sans-serif}
+.eye-g{width:44px;height:28px;display:block;opacity:.8}
+.eye-g .sclera{fill:none;stroke:rgba(238,241,246,.7);stroke-width:1.5}
+.eye-g .pup{fill:#eef1f6}
+.r-row:hover .eye-g .pup{fill:url(#iriGrad)}
 
-/* small tracking eye glyph */
-.eye-g{width:44px;height:28px;display:block}
-.eye-g .sclera{fill:none;stroke:var(--ink);stroke-width:1.6}
-.eye-g .pup{fill:var(--ink)}
-.r-row:hover .eye-g .pup{fill:var(--accent)}
+/* ------------ ethos ------------ */
+.ethos-list{counter-reset:e}
+.ethos-line{position:relative;padding:clamp(30px,4.5vh,44px) 0 clamp(30px,4.5vh,44px) clamp(54px,7vw,96px);
+  border-bottom:1px solid var(--hair)}
+.ethos-line::before{counter-increment:e;content:"0" counter(e);
+  position:absolute;left:0;top:50%;transform:translateY(-50%);
+  font-family:"IBM Plex Mono",monospace;font-size:.72rem;letter-spacing:.14em;color:var(--muted)}
+.ethos-line h3{font-family:"Instrument Serif",serif;font-style:italic;font-weight:400;
+  font-size:clamp(1.6rem,4vw,2.7rem);line-height:1.12}
+.ethos-line:hover h3{background:var(--iri);-webkit-background-clip:text;background-clip:text;color:transparent}
+.ethos-line p{margin-top:8px;color:var(--muted);font-size:.94rem;max-width:600px;font-family:"Inter",system-ui,sans-serif}
 
-/* ---------------- projects ---------------- */
-.proj{display:grid;grid-template-columns:1fr;border-bottom:1px solid var(--line)}
-.p-item{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:clamp(18px,4vw,64px);
-  padding:44px 0;border-bottom:1px solid var(--line)}
-.p-item:last-child{border-bottom:none}
-@media(max-width:820px){.p-item{grid-template-columns:1fr}}
-.p-title{font-family:"Space Grotesk",sans-serif;font-weight:700;font-size:clamp(2rem,5vw,3.4rem);
-  line-height:.95;letter-spacing:-.02em;display:flex;align-items:flex-start;gap:14px;flex-wrap:wrap}
-.badge{font-family:"IBM Plex Mono",monospace;font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;
-  border:1px solid var(--ink);padding:5px 10px;border-radius:999px;white-space:nowrap;position:relative;top:.5em}
-.badge.hot{background:var(--accent);border-color:var(--accent);color:var(--paper)}
-.p-desc{margin-top:16px;color:var(--ink-soft);max-width:560px;font-size:.96rem}
-.p-links{margin-top:22px;display:flex;gap:8px 22px;flex-wrap:wrap;font-family:"IBM Plex Mono",monospace;font-size:.76rem;letter-spacing:.1em}
-.p-links a{text-decoration:none;color:var(--ink);text-transform:uppercase;border-bottom:1px solid var(--line-strong);padding-bottom:2px}
-.p-links a:hover{color:var(--accent);border-bottom-color:var(--accent)}
-.p-links .soon{color:var(--ink-soft);text-transform:uppercase}
-.p-stats{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--line);
-  border:1px solid var(--line);align-self:start}
-.p-stats div{background:var(--paper);padding:18px 20px}
-.p-stats b{font-family:"Space Grotesk",sans-serif;display:block;font-size:clamp(1.6rem,3vw,2.3rem);font-weight:700;line-height:1.05}
-.p-stats span{font-family:"IBM Plex Mono",monospace;font-size:.66rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-soft)}
-
-/* ---------------- publications ---------------- */
-.pub{padding:36px 0;border-bottom:1px solid var(--line);display:grid;grid-template-columns:130px 1fr;gap:clamp(16px,3vw,44px)}
-@media(max-width:700px){.pub{grid-template-columns:1fr}}
-.pub .venue{font-family:"IBM Plex Mono",monospace;font-size:.74rem;letter-spacing:.12em;color:var(--accent);text-transform:uppercase}
-.pub h3{font-family:"Space Grotesk",sans-serif;font-weight:600;font-size:clamp(1.15rem,2.4vw,1.6rem);line-height:1.25}
-.pub .auth{margin-top:10px;color:var(--ink-soft);font-size:.88rem;max-width:760px}
-.pub .p-links{margin-top:14px}
-
-/* ---------------- ethos ---------------- */
-.ethos-grid{display:grid;grid-template-columns:1fr 1fr;gap:0}
-@media(max-width:820px){.ethos-grid{grid-template-columns:1fr}}
-.ethos-line{padding:34px 28px 34px 0;border-bottom:1px solid var(--line);
-  font-family:"Space Grotesk",sans-serif;font-weight:600;font-size:clamp(1.15rem,2.4vw,1.6rem);line-height:1.3}
-.ethos-line:nth-child(odd){border-right:1px solid var(--line);padding-right:34px}
-@media(max-width:820px){.ethos-line:nth-child(odd){border-right:none;padding-right:0}}
-.ethos-line span{display:block;margin-top:8px;font-family:"Inter",sans-serif;font-weight:400;
-  font-size:.92rem;color:var(--ink-soft);line-height:1.6}
-
-/* ---------------- people ---------------- */
-.people{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));border-left:1px solid var(--line)}
-.person{border-right:1px solid var(--line);border-bottom:1px solid var(--line);border-top:1px solid var(--line);
-  padding:28px 18px 24px;text-align:center;transition:background .2s ease}
-.person:hover{background:var(--paper2)}
-.person img{width:76px;height:76px;border-radius:50%;filter:grayscale(1) contrast(1.05);
-  border:1px solid var(--line-strong);transition:filter .25s ease}
-.person:hover img{filter:grayscale(0)}
+/* ------------ people ------------ */
+.people{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:1px;background:var(--hair);
+  border:1px solid var(--hair);margin-top:40px}
+.person{background:var(--bg);padding:34px 16px 28px;text-align:center;transition:background .25s ease}
+.person:hover{background:var(--bg-2)}
+.person .av{display:block;width:86px;height:86px;margin:0 auto;border-radius:50%;padding:2.5px;
+  background:var(--hair-strong);transition:background .3s ease}
+.person:hover .av{background:var(--iri)}
+.person .av img{width:100%;height:100%;border-radius:50%;display:block;filter:grayscale(1);transition:filter .3s ease;object-fit:cover}
+.person:hover .av img{filter:grayscale(0)}
 .person a{text-decoration:none}
-.person .nm{display:block;margin-top:14px;font-family:"Space Grotesk",sans-serif;font-weight:600;font-size:.92rem}
-.person .hd{display:block;margin-top:3px;font-family:"IBM Plex Mono",monospace;font-size:.68rem;color:var(--ink-soft);letter-spacing:.06em}
+.person .nm{display:block;margin-top:15px;font-weight:600;font-size:.93rem}
+.person .hd{display:block;margin-top:4px;font-family:"IBM Plex Mono",monospace;font-size:.66rem;color:var(--muted);letter-spacing:.05em}
 
-/* ---------------- footer ---------------- */
-footer{margin-top:clamp(70px,12vh,130px);border-top:1px solid var(--line-strong);position:relative;z-index:1}
-.foot-motto{font-family:"Space Grotesk",sans-serif;font-weight:700;text-transform:uppercase;
-  font-size:clamp(2rem,7.4vw,5.6rem);line-height:.95;letter-spacing:-.02em;
-  padding:clamp(36px,6vh,64px) 0 8px}
-.foot-motto em{font-style:normal;color:transparent;-webkit-text-stroke:1.6px var(--ink)}
+/* ------------ footer ------------ */
+footer{margin-top:clamp(80px,14vh,150px);border-top:1px solid var(--hair-strong);position:relative;z-index:2;overflow:hidden}
+.foot-motto{font-weight:700;text-transform:uppercase;text-align:center;
+  font-size:clamp(2.1rem,7.6vw,6rem);line-height:.96;letter-spacing:-.02em;
+  padding:clamp(44px,8vh,80px) 0 10px}
+.foot-motto .go{background:var(--iri);-webkit-background-clip:text;background-clip:text;color:transparent}
+.foot-eye-row{display:flex;justify-content:center;gap:14px;margin:26px 0 6px;opacity:.85}
 .foot-bar{display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap;
-  padding:22px 0 34px;font-family:"IBM Plex Mono",monospace;font-size:.7rem;letter-spacing:.12em;color:var(--ink-soft);text-transform:uppercase}
-.foot-bar a{color:var(--ink);text-decoration:none;border-bottom:1px solid var(--line-strong)}
-.foot-bar a:hover{color:var(--accent);border-bottom-color:var(--accent)}
+  padding:26px 0 36px;font-family:"IBM Plex Mono",monospace;font-size:.68rem;letter-spacing:.14em;color:var(--muted);text-transform:uppercase}
+.foot-bar a{color:var(--text);text-decoration:none;border-bottom:1px solid var(--hair-strong);padding-bottom:2px}
+.foot-bar a:hover{color:var(--teal);border-color:var(--teal)}
 </style>
 </head>
 <body>
 
+<div class="aurora" aria-hidden="true"><i class="a1"></i><i class="a2"></i><i class="a3"></i></div>
+
+<!-- shared gradient defs for svg eyes -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <linearGradient id="iriGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#5eead4"/><stop offset=".5" stop-color="#a78bfa"/><stop offset="1" stop-color="#f0b95e"/>
+    </linearGradient>
+  </defs>
+</svg>
+
 <header>
   <div class="wrap bar">
     <a class="wordmark" href="#top">
-      <svg class="mini-eye" viewBox="0 0 44 28" data-eye>
-        <ellipse class="sclera" cx="22" cy="14" rx="20" ry="12" fill="none" stroke="#15171c" stroke-width="1.8"/>
-        <circle class="pup" data-pupil cx="22" cy="14" r="5.5" fill="#0e7d87"/>
+      <svg width="24" height="24" viewBox="0 0 64 64" data-eye>
+        <circle cx="32" cy="32" r="27" fill="none" stroke="url(#iriGrad)" stroke-width="3.4"/>
+        <circle data-pupil cx="32" cy="32" r="10" fill="#eef1f6"/>
       </svg>
       ARGUS&nbsp;LAB
     </a>
@@ -200,53 +228,28 @@ footer{margin-top:clamp(70px,12vh,130px);border-top:1px solid var(--line-strong)
 
 <main id="top">
   <div class="wrap hero">
-    <p class="kicker"><b>Independent research group</b><span>est. 2026</span><span>agents · perception · evaluation</span></p>
+    <p class="kicker"><b>Independent research group</b><span>est. 2026</span><span>Panoptes · 100 eyes</span></p>
 
-    <div class="hero-grid">
-      <h1 class="display">
-        Argus
-        <span class="row2"><span class="lab">Lab</span></span>
-      </h1>
-      <div class="hero-side">
-        <!-- instrument iris -->
-        <svg class="iris-wrap" viewBox="0 0 300 300" data-eye aria-hidden="true">
-          <g fill="none" stroke="#15171c">
-            <circle cx="150" cy="150" r="146" stroke-width="1" opacity=".45"/>
-            <circle cx="150" cy="150" r="128" stroke-width="1.6"/>
-            <circle cx="150" cy="150" r="104" stroke-width="1" opacity=".5"/>
-            <circle cx="150" cy="150" r="84"  stroke-width="1.2"/>
-            <g opacity=".65" stroke-width="1">
-              <g id="ticks"></g>
-            </g>
-          </g>
-          <g data-iris>
-            <circle cx="150" cy="150" r="56" fill="none" stroke="#15171c" stroke-width="1.6"/>
-            <circle data-pupil cx="150" cy="150" r="26" fill="#15171c"/>
-            <circle data-pupil-dot cx="150" cy="150" r="8" fill="#0e7d87"/>
-          </g>
-          <g font-family="IBM Plex Mono, monospace" font-size="9" fill="#5b6170" letter-spacing="1.5">
-            <text x="150" y="14" text-anchor="middle">PANOPTES</text>
-            <text x="150" y="294" text-anchor="middle">100 EYES · ALWAYS OPEN</text>
-          </g>
-        </svg>
+    <div class="stage">
+      <h1 class="display">Argus</h1>
+      <div class="eye" data-eye data-big>
+        <div class="halo"></div>
+        <div class="ring"></div>
+        <div class="iris"></div>
+        <div class="pupil-track"><div class="pupil" data-pupil></div></div>
       </div>
+      <h1 class="display"><span class="l2">Lab</span></h1>
     </div>
 
-    <div class="tag-row">
-      <p class="tagline">Agents that <em>see</em>, <em>act</em> &amp; <em>verify</em>.</p>
-      <p class="motto">“Lost, but moving forward.”</p>
-    </div>
+    <p class="tagline">Agents that <span class="serif iri-text">see</span>, <span class="serif iri-text">act</span> &amp; <span class="serif iri-text">verify</span>.</p>
+    <p class="motto">“Lost, but moving forward.”</p>
 
-    <p class="myth">
-      In Greek myth, <strong>Argus Panoptes</strong> was the hundred-eyed watchman — some eyes always open,
-      nothing escaping his gaze. We build agents the same way: perceiving real interfaces,
-      acting across them, and verifying every step of the work.
-    </p>
+    <span class="scroll-cue">Scroll</span>
   </div>
 
   <div class="ticker" aria-hidden="true">
     <div class="ticker-inner">
-      <span>See&nbsp;·&nbsp;Act&nbsp;·&nbsp;Verify&nbsp;·&nbsp;<b>Perception</b>&nbsp;·&nbsp;Action&nbsp;·&nbsp;Evaluation&nbsp;·&nbsp;</span><span>See&nbsp;·&nbsp;Act&nbsp;·&nbsp;Verify&nbsp;·&nbsp;<b>Perception</b>&nbsp;·&nbsp;Action&nbsp;·&nbsp;Evaluation&nbsp;·&nbsp;</span>
+      <span>See <i class="sep">◉</i> Act <i class="sep">◉</i> Verify <i class="sep">◉</i> Perception <i class="sep">◉</i> Action <i class="sep">◉</i> Evaluation <i class="sep">◉</i>&nbsp;</span><span>See <i class="sep">◉</i> Act <i class="sep">◉</i> Verify <i class="sep">◉</i> Perception <i class="sep">◉</i> Action <i class="sep">◉</i> Evaluation <i class="sep">◉</i>&nbsp;</span>
     </div>
   </div>
 
@@ -260,29 +263,28 @@ footer{margin-top:clamp(70px,12vh,130px);border-top:1px solid var(--line-strong)
       </div>
 
       <div class="r-row">
-        <div class="r-idx">EYE<b>P</b></div>
+        <div class="r-idx">P</div>
         <div class="r-name">Perception</div>
         <p class="r-desc">Reading what interfaces actually render — charts, badges, maps,
           lazy-loaded and animating elements — on live webpages and desktop screens.</p>
         <svg class="eye-g" viewBox="0 0 44 28" data-eye><ellipse class="sclera" cx="22" cy="14" rx="20" ry="12"/><circle class="pup" data-pupil cx="22" cy="14" r="5"/></svg>
       </div>
       <div class="r-row">
-        <div class="r-idx">HAND<b>A</b></div>
+        <div class="r-idx">A</div>
         <div class="r-name">Action</div>
         <p class="r-desc">Executing non-trivial operations: sliders and date-range pickers, map drawing,
           video control, real mouse-and-keyboard automation across applications.</p>
         <svg class="eye-g" viewBox="0 0 44 28" data-eye><ellipse class="sclera" cx="22" cy="14" rx="20" ry="12"/><circle class="pup" data-pupil cx="22" cy="14" r="5"/></svg>
       </div>
       <div class="r-row">
-        <div class="r-idx">PROOF<b>V</b></div>
+        <div class="r-idx">V</div>
         <div class="r-name">Verification</div>
-        <p class="r-desc">Verifiable agent-as-a-judge evaluation — rubric trees of independently checkable
-          criteria, grounded in live sources, so scores mean what they claim.</p>
+        <p class="r-desc">Judge agents and rubric trees of independently checkable criteria,
+          grounded in live sources — so a claim of “done” actually means done.</p>
         <svg class="eye-g" viewBox="0 0 44 28" data-eye><ellipse class="sclera" cx="22" cy="14" rx="20" ry="12"/><circle class="pup" data-pupil cx="22" cy="14" r="5"/></svg>
       </div>
     </div>
   </section>
-
 
   <!-- 02 ETHOS -->
   <section id="ethos">
@@ -292,11 +294,23 @@ footer{margin-top:clamp(70px,12vh,130px);border-top:1px solid var(--line-strong)
         <h2 class="sec-title">Ethos</h2>
         <span class="sec-note">how we work</span>
       </div>
-      <div class="ethos-grid">
-        <p class="ethos-line">Watch the real thing. <span>Agents should be studied on live interfaces, not sanitized sandboxes.</span></p>
-        <p class="ethos-line">Claims need receipts. <span>If an agent says it did the work, the work must be independently checkable.</span></p>
-        <p class="ethos-line">Small group, long gaze. <span>We would rather stare at one hard problem for a year than skim ten.</span></p>
-        <p class="ethos-line">Lost, but moving forward. <span>Not knowing the way is no reason to stand still.</span></p>
+      <div class="ethos-list">
+        <div class="ethos-line">
+          <h3>Watch the real thing.</h3>
+          <p>Agents should be studied on live interfaces, not sanitized sandboxes.</p>
+        </div>
+        <div class="ethos-line">
+          <h3>Claims need receipts.</h3>
+          <p>If an agent says it did the work, the work must be independently checkable.</p>
+        </div>
+        <div class="ethos-line">
+          <h3>Small group, long gaze.</h3>
+          <p>We would rather stare at one hard problem for a year than skim ten.</p>
+        </div>
+        <div class="ethos-line">
+          <h3>Lost, but moving forward.</h3>
+          <p>Not knowing the way is no reason to stand still.</p>
+        </div>
       </div>
     </div>
   </section>
@@ -309,35 +323,34 @@ footer{margin-top:clamp(70px,12vh,130px);border-top:1px solid var(--line-strong)
         <h2 class="sec-title">People</h2>
         <span class="sec-note">the eyes of argus</span>
       </div>
-      <div style="height:34px"></div>
       <div class="people">
         <div class="person">
           <a href="https://github.com/WarriorXu0302" target="_blank" rel="noopener">
-            <img src="https://avatars.githubusercontent.com/u/211244072?v=4" alt="Warrior Xu" loading="lazy"/>
+            <span class="av"><img src="https://avatars.githubusercontent.com/u/211244072?v=4" alt="Warrior Xu" loading="lazy"/></span>
             <span class="nm">Warrior Xu</span><span class="hd">@WarriorXu0302</span>
           </a>
         </div>
         <div class="person">
           <a href="https://github.com/kynali" target="_blank" rel="noopener">
-            <img src="https://avatars.githubusercontent.com/u/71322430?v=4" alt="kynali" loading="lazy"/>
+            <span class="av"><img src="https://avatars.githubusercontent.com/u/71322430?v=4" alt="kynali" loading="lazy"/></span>
             <span class="nm">kynali</span><span class="hd">@kynali</span>
           </a>
         </div>
         <div class="person">
           <a href="https://github.com/ln172" target="_blank" rel="noopener">
-            <img src="https://avatars.githubusercontent.com/u/101444324?v=4" alt="ln172" loading="lazy"/>
+            <span class="av"><img src="https://avatars.githubusercontent.com/u/101444324?v=4" alt="ln172" loading="lazy"/></span>
             <span class="nm">ln172</span><span class="hd">@ln172</span>
           </a>
         </div>
         <div class="person">
           <a href="https://github.com/QINYZ123" target="_blank" rel="noopener">
-            <img src="https://avatars.githubusercontent.com/u/296359024?v=4" alt="QINYZ123" loading="lazy"/>
+            <span class="av"><img src="https://avatars.githubusercontent.com/u/296359024?v=4" alt="QINYZ123" loading="lazy"/></span>
             <span class="nm">QINYZ123</span><span class="hd">@QINYZ123</span>
           </a>
         </div>
         <div class="person">
           <a href="https://github.com/4685186" target="_blank" rel="noopener">
-            <img src="https://avatars.githubusercontent.com/u/44164974?v=4" alt="c4685186" loading="lazy"/>
+            <span class="av"><img src="https://avatars.githubusercontent.com/u/44164974?v=4" alt="c4685186" loading="lazy"/></span>
             <span class="nm">c4685186</span><span class="hd">@4685186</span>
           </a>
         </div>
@@ -348,7 +361,12 @@ footer{margin-top:clamp(70px,12vh,130px);border-top:1px solid var(--line-strong)
 
 <footer>
   <div class="wrap">
-    <p class="foot-motto">Lost, but<br/><em>moving forward.</em></p>
+    <p class="foot-motto">Lost, but<br/><span class="go">moving forward.</span></p>
+    <div class="foot-eye-row" aria-hidden="true">
+      <svg width="34" height="22" viewBox="0 0 44 28" data-eye><ellipse cx="22" cy="14" rx="20" ry="12" fill="none" stroke="rgba(238,241,246,.5)" stroke-width="1.4"/><circle data-pupil cx="22" cy="14" r="4.6" fill="url(#iriGrad)"/></svg>
+      <svg width="34" height="22" viewBox="0 0 44 28" data-eye><ellipse cx="22" cy="14" rx="20" ry="12" fill="none" stroke="rgba(238,241,246,.5)" stroke-width="1.4"/><circle data-pupil cx="22" cy="14" r="4.6" fill="url(#iriGrad)"/></svg>
+      <svg width="34" height="22" viewBox="0 0 44 28" data-eye><ellipse cx="22" cy="14" rx="20" ry="12" fill="none" stroke="rgba(238,241,246,.5)" stroke-width="1.4"/><circle data-pupil cx="22" cy="14" r="4.6" fill="url(#iriGrad)"/></svg>
+    </div>
     <div class="foot-bar">
       <span>© 2026 ARGUS Lab</span>
       <span>El. Psy. Kongroo.</span>
@@ -358,60 +376,48 @@ footer{margin-top:clamp(70px,12vh,130px);border-top:1px solid var(--line-strong)
 </footer>
 
 <script>
-/* radial ticks for the instrument iris */
-(function(){
-  const g = document.getElementById('ticks');
-  if(!g) return;
-  const NS='http://www.w3.org/2000/svg';
-  for(let i=0;i<72;i++){
-    const a = i*Math.PI/36;
-    const long = i%6===0;
-    const r1 = long?112:120, r2 = 128;
-    const l = document.createElementNS(NS,'line');
-    l.setAttribute('x1',150+r1*Math.cos(a)); l.setAttribute('y1',150+r1*Math.sin(a));
-    l.setAttribute('x2',150+r2*Math.cos(a)); l.setAttribute('y2',150+r2*Math.sin(a));
-    g.appendChild(l);
-  }
-})();
-
-/* every eye on the page watches your cursor */
+/* every eye follows the cursor */
 (function(){
   const eyes = [...document.querySelectorAll('[data-eye]')];
   if(!eyes.length) return;
   const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  let mx = innerWidth/2, my = innerHeight/3, raf = null;
+  let mx = innerWidth/2, my = innerHeight/2, raf = null;
 
   function update(){
     raf = null;
     for(const eye of eyes){
       const r = eye.getBoundingClientRect();
+      if(r.bottom < -60 || r.top > innerHeight + 60) continue;
       const cx = r.left + r.width/2, cy = r.top + r.height/2;
-      const ang = Math.atan2(my-cy, mx-cx);
-      const big = r.width > 120;
-      const d = big ? 16 : 4.2;
-      const dx = d*Math.cos(ang), dy = (big?d:d*0.62)*Math.sin(ang);
-      for(const p of eye.querySelectorAll('[data-pupil],[data-pupil-dot]')){
+      const ang = Math.atan2(my - cy, mx - cx);
+      const dist = Math.hypot(mx - cx, my - cy);
+      const big = eye.hasAttribute('data-big');
+      const max = big ? r.width * 0.17 : 4.4;
+      const d = Math.min(max, dist * 0.08);
+      const dx = d * Math.cos(ang);
+      const dy = (big ? d : d * 0.62) * Math.sin(ang);
+      for(const p of eye.querySelectorAll('[data-pupil]')){
         p.style.transform = `translate(${dx}px, ${dy}px)`;
       }
     }
   }
-  if(!reduced){
-    addEventListener('pointermove', e => {
-      mx = e.clientX; my = e.clientY;
-      if(!raf) raf = requestAnimationFrame(update);
-    }, {passive:true});
-    /* idle wander so it feels alive before first pointer move */
-    let t = 0;
-    setInterval(()=>{ if(document.hasFocus && !document.hidden){
-      t += 1;
-      if(performance.now() < 6000 || mx===innerWidth/2){
-        mx = innerWidth/2 + Math.cos(t/2)*innerWidth/4;
-        my = innerHeight/3 + Math.sin(t/3)*innerHeight/5;
-        if(!raf) raf = requestAnimationFrame(update);
-      }
-    }}, 900);
-    update();
-  }
+  if(reduced) return;
+  addEventListener('pointermove', e => {
+    mx = e.clientX; my = e.clientY;
+    if(!raf) raf = requestAnimationFrame(update);
+  }, {passive:true});
+  addEventListener('scroll', () => { if(!raf) raf = requestAnimationFrame(update); }, {passive:true});
+  /* idle wander before first interaction */
+  let t = 0, interacted = false;
+  addEventListener('pointermove', () => interacted = true, {once:true, passive:true});
+  setInterval(() => {
+    if(interacted || document.hidden) return;
+    t += 1;
+    mx = innerWidth/2  + Math.cos(t/2.2) * innerWidth/4;
+    my = innerHeight/2 + Math.sin(t/3.1) * innerHeight/4;
+    if(!raf) raf = requestAnimationFrame(update);
+  }, 850);
+  update();
 })();
 </script>
 </body>
