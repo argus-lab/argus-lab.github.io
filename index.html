@@ -207,6 +207,50 @@ section{padding:clamp(76px,12vh,130px) 0 0;position:relative;z-index:2}
 .person .nm{display:block;margin-top:15px;font-weight:600;font-size:.93rem}
 .person .hd{display:block;margin-top:4px;font-family:"IBM Plex Mono",monospace;font-size:.66rem;color:var(--muted);letter-spacing:.05em}
 
+
+/* ------------ hundred-eyes canvas ------------ */
+#eyefield{position:absolute;inset:0;z-index:1;pointer-events:none;opacity:.75}
+
+/* ------------ cursor spotlight ------------ */
+#spot{position:fixed;inset:0;z-index:1;pointer-events:none;
+  background:radial-gradient(560px circle at var(--sx,50%) var(--sy,30%),rgba(122,144,255,.07),transparent 62%)}
+
+/* ------------ hero CTAs ------------ */
+.cta-row{margin-top:clamp(24px,4vh,38px);display:flex;justify-content:center;gap:14px;flex-wrap:wrap;z-index:3;position:relative}
+.cta{position:relative;display:inline-flex;align-items:center;gap:9px;padding:13px 26px;border-radius:12px;
+  font-family:"IBM Plex Mono",monospace;font-size:.74rem;letter-spacing:.14em;text-transform:uppercase;
+  text-decoration:none;color:var(--text);transition:transform .18s ease}
+.cta:hover{transform:translateY(-2px)}
+.cta.primary{background:rgba(14,17,24,.7);backdrop-filter:blur(8px)}
+.cta.primary::before{content:"";position:absolute;inset:0;border-radius:12px;padding:1px;background:var(--iri);
+  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;
+  pointer-events:none}
+.cta.primary:hover{box-shadow:0 8px 34px rgba(103,232,249,.16),0 2px 14px rgba(167,139,250,.18)}
+.cta.ghost{border:1px solid var(--hair-strong)}
+.cta.ghost:hover{border-color:var(--teal);color:var(--teal)}
+
+/* ------------ scroll reveal ------------ */
+.rv{opacity:0;transform:translateY(26px);transition:opacity .7s cubic-bezier(.22,.7,.3,1),transform .7s cubic-bezier(.22,.7,.3,1)}
+.rv.in{opacity:1;transform:none}
+@media (prefers-reduced-motion: reduce){.rv{opacity:1;transform:none;transition:none}}
+
+/* ------------ glass work cards ------------ */
+.work-item{position:relative;border:none;border-radius:18px;margin-top:26px;
+  padding:clamp(28px,4.5vw,44px);background:rgba(14,17,24,.55);backdrop-filter:blur(10px);
+  transition:transform .25s ease,box-shadow .25s ease}
+.work-item::before{content:"";position:absolute;inset:0;border-radius:18px;padding:1px;
+  background:linear-gradient(140deg,rgba(94,234,212,.35),rgba(238,241,246,.07) 30%,rgba(167,139,250,.28) 65%,rgba(240,185,94,.3));
+  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;
+  pointer-events:none}
+.work-item:hover{transform:translateY(-4px);box-shadow:0 20px 60px rgba(4,6,10,.6),0 6px 40px rgba(103,232,249,.08)}
+.chip{background:rgba(10,12,17,.65);backdrop-filter:blur(6px)}
+
+/* custom scrollbar */
+::-webkit-scrollbar{width:11px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:#1d2330;border-radius:6px;border:2px solid var(--bg)}
+::-webkit-scrollbar-thumb:hover{background:#2a3347}
+
 /* ------------ footer ------------ */
 footer{margin-top:clamp(80px,14vh,150px);border-top:1px solid var(--hair-strong);position:relative;z-index:2;overflow:hidden}
 .foot-motto{font-weight:700;text-transform:uppercase;text-align:center;
@@ -223,6 +267,7 @@ footer{margin-top:clamp(80px,14vh,150px);border-top:1px solid var(--hair-strong)
 <body>
 
 <div class="aurora" aria-hidden="true"><i class="a1"></i><i class="a2"></i><i class="a3"></i></div>
+<div id="spot" aria-hidden="true"></div>
 
 <!-- shared gradient defs for svg eyes -->
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
@@ -252,7 +297,8 @@ footer{margin-top:clamp(80px,14vh,150px);border-top:1px solid var(--hair-strong)
   </div>
 </header>
 
-<main id="top">
+<main id="top" style="position:relative">
+  <canvas id="eyefield" aria-hidden="true"></canvas>
   <div class="wrap hero">
     <p class="kicker"><b>Independent research group</b><span>est. 2026</span><span>Panoptes · 100 eyes</span></p>
 
@@ -270,6 +316,11 @@ footer{margin-top:clamp(80px,14vh,150px);border-top:1px solid var(--hair-strong)
     <p class="tagline">Agents that <span class="serif iri-text">see</span>, <span class="serif iri-text">act</span> &amp; <span class="serif iri-text">verify</span>.</p>
     <p class="motto">“Lost, but moving forward.”</p>
 
+    <div class="cta-row">
+      <a class="cta primary" href="#work">Explore our work ↓</a>
+      <a class="cta ghost" href="https://github.com/argus-lab" target="_blank" rel="noopener">GitHub ↗</a>
+    </div>
+
     <span class="scroll-cue">Scroll</span>
   </div>
 
@@ -282,27 +333,27 @@ footer{margin-top:clamp(80px,14vh,150px);border-top:1px solid var(--hair-strong)
   <!-- 01 RESEARCH -->
   <section id="research">
     <div class="wrap">
-      <div class="sec-head">
+      <div class="rv sec-head">
         <span class="sec-num">01</span>
         <h2 class="sec-title">Research</h2>
         <span class="sec-note">the agentic stack, watched end to end</span>
       </div>
 
-      <div class="r-row">
+      <div class="rv r-row">
         <div class="r-idx">P</div>
         <div class="r-name">Perception</div>
         <p class="r-desc">Reading what interfaces actually render — charts, badges, maps,
           lazy-loaded and animating elements — on live webpages and desktop screens.</p>
         <svg class="eye-g" viewBox="0 0 44 28" data-eye><ellipse class="sclera" cx="22" cy="14" rx="20" ry="12"/><circle class="pup" data-pupil cx="22" cy="14" r="5"/></svg>
       </div>
-      <div class="r-row">
+      <div class="rv r-row">
         <div class="r-idx">A</div>
         <div class="r-name">Action</div>
         <p class="r-desc">Executing non-trivial operations: sliders and date-range pickers, map drawing,
           video control, real mouse-and-keyboard automation across applications.</p>
         <svg class="eye-g" viewBox="0 0 44 28" data-eye><ellipse class="sclera" cx="22" cy="14" rx="20" ry="12"/><circle class="pup" data-pupil cx="22" cy="14" r="5"/></svg>
       </div>
-      <div class="r-row">
+      <div class="rv r-row">
         <div class="r-idx">V</div>
         <div class="r-name">Verification</div>
         <p class="r-desc">Judge agents and rubric trees of independently checkable criteria,
@@ -316,15 +367,15 @@ footer{margin-top:clamp(80px,14vh,150px);border-top:1px solid var(--hair-strong)
   <!-- 02 WORK -->
   <section id="work">
     <div class="wrap">
-      <div class="sec-head">
+      <div class="rv sec-head">
         <span class="sec-num">02</span>
         <h2 class="sec-title">Work</h2>
         <span class="sec-note">two testbeds, one thesis</span>
       </div>
-      <p class="work-lead">The same loop — see, act, verify — instantiated in the two environments
+      <p class="rv work-lead">The same loop — see, act, verify — instantiated in the two environments
         where real work happens: the browser and the desktop.</p>
 
-      <div class="work-item">
+      <div class="rv work-item">
         <div class="work-head">
           <span class="work-title">CAP-Bench</span>
           <span class="work-tags"><span class="wtag hot">COLM 2026</span><span class="wtag">Open source</span><span class="wtag">Live web</span></span>
@@ -349,7 +400,7 @@ footer{margin-top:clamp(80px,14vh,150px);border-top:1px solid var(--hair-strong)
         </div>
       </div>
 
-      <div class="work-item">
+      <div class="rv work-item">
         <div class="work-head">
           <span class="work-title">Amadeus</span>
           <span class="work-tags"><span class="wtag">In development</span><span class="wtag">Local-first</span><span class="wtag">Desktop</span></span>
@@ -376,25 +427,25 @@ footer{margin-top:clamp(80px,14vh,150px);border-top:1px solid var(--hair-strong)
   <!-- 03 ETHOS -->
   <section id="ethos">
     <div class="wrap">
-      <div class="sec-head">
+      <div class="rv sec-head">
         <span class="sec-num">03</span>
         <h2 class="sec-title">Ethos</h2>
         <span class="sec-note">how we work</span>
       </div>
       <div class="ethos-list">
-        <div class="ethos-line">
+        <div class="rv ethos-line">
           <h3>Watch the real thing.</h3>
           <p>Agents should be studied on live interfaces, not sanitized sandboxes.</p>
         </div>
-        <div class="ethos-line">
+        <div class="rv ethos-line">
           <h3>Claims need receipts.</h3>
           <p>If an agent says it did the work, the work must be independently checkable.</p>
         </div>
-        <div class="ethos-line">
+        <div class="rv ethos-line">
           <h3>Small group, long gaze.</h3>
           <p>We would rather stare at one hard problem for a year than skim ten.</p>
         </div>
-        <div class="ethos-line">
+        <div class="rv ethos-line">
           <h3>Lost, but moving forward.</h3>
           <p>Not knowing the way is no reason to stand still.</p>
         </div>
@@ -405,37 +456,37 @@ footer{margin-top:clamp(80px,14vh,150px);border-top:1px solid var(--hair-strong)
   <!-- 04 PEOPLE -->
   <section id="people">
     <div class="wrap">
-      <div class="sec-head">
+      <div class="rv sec-head">
         <span class="sec-num">04</span>
         <h2 class="sec-title">People</h2>
         <span class="sec-note">the eyes of argus</span>
       </div>
       <div class="people">
-        <div class="person">
+        <div class="rv person">
           <a href="https://github.com/WarriorXu0302" target="_blank" rel="noopener">
             <span class="av"><img src="https://avatars.githubusercontent.com/u/211244072?v=4" alt="Warrior Xu" loading="lazy"/></span>
             <span class="nm">Warrior Xu</span><span class="hd">@WarriorXu0302</span>
           </a>
         </div>
-        <div class="person">
+        <div class="rv person">
           <a href="https://github.com/kynali" target="_blank" rel="noopener">
             <span class="av"><img src="https://avatars.githubusercontent.com/u/71322430?v=4" alt="kynali" loading="lazy"/></span>
             <span class="nm">kynali</span><span class="hd">@kynali</span>
           </a>
         </div>
-        <div class="person">
+        <div class="rv person">
           <a href="https://github.com/ln172" target="_blank" rel="noopener">
             <span class="av"><img src="https://avatars.githubusercontent.com/u/101444324?v=4" alt="ln172" loading="lazy"/></span>
             <span class="nm">ln172</span><span class="hd">@ln172</span>
           </a>
         </div>
-        <div class="person">
+        <div class="rv person">
           <a href="https://github.com/QINYZ123" target="_blank" rel="noopener">
             <span class="av"><img src="https://avatars.githubusercontent.com/u/296359024?v=4" alt="QINYZ123" loading="lazy"/></span>
             <span class="nm">QINYZ123</span><span class="hd">@QINYZ123</span>
           </a>
         </div>
-        <div class="person">
+        <div class="rv person">
           <a href="https://github.com/4685186" target="_blank" rel="noopener">
             <span class="av"><img src="https://avatars.githubusercontent.com/u/44164974?v=4" alt="c4685186" loading="lazy"/></span>
             <span class="nm">c4685186</span><span class="hd">@4685186</span>
@@ -448,7 +499,7 @@ footer{margin-top:clamp(80px,14vh,150px);border-top:1px solid var(--hair-strong)
 
 <footer>
   <div class="wrap">
-    <p class="foot-motto">Lost, but<br/><span class="go">moving forward.</span></p>
+    <p class="rv foot-motto">Lost, but<br/><span class="go">moving forward.</span></p>
     <div class="foot-eye-row" aria-hidden="true">
       <svg width="34" height="22" viewBox="0 0 44 28" data-eye><ellipse cx="22" cy="14" rx="20" ry="12" fill="none" stroke="rgba(238,241,246,.5)" stroke-width="1.4"/><circle data-pupil cx="22" cy="14" r="4.6" fill="url(#iriGrad)"/></svg>
       <svg width="34" height="22" viewBox="0 0 44 28" data-eye><ellipse cx="22" cy="14" rx="20" ry="12" fill="none" stroke="rgba(238,241,246,.5)" stroke-width="1.4"/><circle data-pupil cx="22" cy="14" r="4.6" fill="url(#iriGrad)"/></svg>
@@ -505,6 +556,103 @@ footer{margin-top:clamp(80px,14vh,150px);border-top:1px solid var(--hair-strong)
     if(!raf) raf = requestAnimationFrame(update);
   }, 850);
   update();
+})();
+
+/* cursor spotlight */
+(function(){
+  const spot = document.getElementById('spot');
+  if(!spot) return;
+  addEventListener('pointermove', e => {
+    spot.style.setProperty('--sx', e.clientX + 'px');
+    spot.style.setProperty('--sy', e.clientY + 'px');
+  }, {passive:true});
+})();
+
+/* scroll reveal */
+(function(){
+  const els = [...document.querySelectorAll('.rv')];
+  if(!('IntersectionObserver' in window)){ els.forEach(e=>e.classList.add('in')); return; }
+  const io = new IntersectionObserver(es => {
+    es.forEach((en,i) => { if(en.isIntersecting){
+      en.target.style.transitionDelay = (en.target.dataset.d || 0) + 'ms';
+      en.target.classList.add('in'); io.unobserve(en.target);
+    }});
+  }, {threshold:.12, rootMargin:'0px 0px -6% 0px'});
+  /* stagger siblings */
+  document.querySelectorAll('.people, .ethos-list').forEach(group => {
+    [...group.querySelectorAll('.rv')].forEach((el,i)=> el.dataset.d = i*70);
+  });
+  els.forEach(e => io.observe(e));
+})();
+
+/* the hundred eyes — canvas field behind the hero */
+(function(){
+  const cv = document.getElementById('eyefield');
+  if(!cv) return;
+  const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const ctx = cv.getContext('2d');
+  let W,H,DPR, eyes=[], mx=innerWidth/2, my=innerHeight/2;
+  const hero = document.querySelector('.hero');
+  const COLORS = ['94,234,212','167,139,250','240,185,94','103,232,249'];
+
+  function size(){
+    DPR = Math.min(devicePixelRatio||1, 2);
+    W = cv.clientWidth = cv.parentElement.clientWidth;
+    H = cv.clientHeight = hero ? hero.offsetHeight + 120 : innerHeight;
+    cv.style.height = H + 'px';
+    cv.width = W*DPR; cv.height = H*DPR; ctx.setTransform(DPR,0,0,DPR,0,0);
+    seed();
+  }
+  function seed(){
+    eyes = [];
+    const n = Math.min(100, Math.floor(W*H/16000));
+    const cx = W/2, cy = H/2;
+    for(let i=0;i<n;i++){
+      let x,y,tries=0;
+      do{ x = Math.random()*W; y = Math.random()*H; tries++; }
+      while(tries<24 && Math.hypot(x-cx,y-cy) < Math.min(W,H)*0.30);
+      eyes.push({x,y,
+        s: 3 + Math.random()*5.5,
+        c: COLORS[(Math.random()*COLORS.length)|0],
+        ph: Math.random()*Math.PI*2,
+        sp: .12 + Math.random()*.35,
+        blink: Math.random()*900|0
+      });
+    }
+  }
+  function draw(tms){
+    ctx.clearRect(0,0,W,H);
+    const t = tms/1000;
+    for(const e of eyes){
+      /* blink cycle: mostly open, brief close */
+      const cyc = (t*e.sp + e.ph) % 6;
+      let open = 1;
+      if(cyc > 5.6) open = Math.max(0, Math.cos((cyc-5.6)/.4*Math.PI/2));
+      const ry = e.s*.62*open + .35;
+      const a = .16 + .22*Math.abs(Math.sin(t*e.sp + e.ph));
+      /* eyelid */
+      ctx.beginPath();
+      ctx.ellipse(e.x, e.y, e.s, ry, 0, 0, Math.PI*2);
+      ctx.strokeStyle = `rgba(${e.c},${a})`;
+      ctx.lineWidth = 1;
+      ctx.stroke();
+      if(open > .25){
+        /* pupil looks toward cursor */
+        const ang = Math.atan2(my - e.y, mx - e.x);
+        const px = e.x + Math.cos(ang)*e.s*.34;
+        const py = e.y + Math.sin(ang)*ry*.4;
+        ctx.beginPath();
+        ctx.arc(px, py, Math.max(.7, e.s*.24), 0, Math.PI*2);
+        ctx.fillStyle = `rgba(${e.c},${a+.25})`;
+        ctx.fill();
+      }
+    }
+    if(!reduced) requestAnimationFrame(draw);
+  }
+  addEventListener('pointermove', e => { mx = e.clientX; my = e.clientY + scrollY; }, {passive:true});
+  addEventListener('resize', size, {passive:true});
+  size();
+  if(reduced){ draw(0); } else { requestAnimationFrame(draw); }
 })();
 </script>
 </body>
