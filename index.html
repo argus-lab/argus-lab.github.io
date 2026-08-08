@@ -151,10 +151,15 @@ section{padding:clamp(76px,12vh,130px) 0 0;position:relative;z-index:2}
 .r-row:hover .r-idx{background:var(--iri);-webkit-background-clip:text;background-clip:text;color:transparent}
 .r-name{font-weight:600;font-size:clamp(1.35rem,2.8vw,2rem);line-height:1.05}
 .r-desc{color:var(--muted);font-size:.93rem;max-width:520px;font-family:"Inter",system-ui,sans-serif}
-.eye-g{width:44px;height:28px;display:block;opacity:.8}
-.eye-g .sclera{fill:none;stroke:rgba(238,241,246,.7);stroke-width:1.5}
-.eye-g .pup{fill:#eef1f6}
-.r-row:hover .eye-g .pup{fill:url(#iriGrad)}
+.eye-g{width:46px;height:27px;display:block;opacity:.85;overflow:visible}
+.eye-g .lid{fill:none;stroke:rgba(238,241,246,.55);stroke-width:1.5;transition:stroke .25s ease}
+.eye-g .irs{fill:url(#iriGrad);opacity:.35;transition:opacity .25s ease}
+.eye-g .pup{fill:#eef1f6;transition:fill .25s ease}
+.eye-g .glint{fill:#fff;opacity:0;transition:opacity .25s ease}
+.r-row:hover .eye-g .lid{stroke:rgba(238,241,246,.9)}
+.r-row:hover .eye-g .irs{opacity:.95}
+.r-row:hover .eye-g .pup{fill:#05070b}
+.r-row:hover .eye-g .glint{opacity:.9}
 
 /* ------------ work ------------ */
 .work-lead{margin-top:34px;font-family:"Instrument Serif",serif;font-style:italic;font-size:clamp(1.25rem,2.6vw,1.8rem);
@@ -393,21 +398,21 @@ footer{margin-top:clamp(80px,14vh,150px);border-top:1px solid var(--hair-strong)
         <div class="r-name">Perception</div>
         <p class="r-desc">Reading what interfaces actually render — charts, badges, maps,
           lazy-loaded and animating elements — on live webpages and desktop screens.</p>
-        <svg class="eye-g" viewBox="0 0 44 28" data-eye><ellipse class="sclera" cx="22" cy="14" rx="20" ry="12"/><circle class="pup" data-pupil cx="22" cy="14" r="5"/></svg>
+        <svg class="eye-g" viewBox="0 0 48 28" data-eye><path class="lid" d="M3 14 Q24 -2 45 14 Q24 30 3 14 Z"/><g data-pupil><circle class="irs" cx="24" cy="14" r="6.4"/><circle class="pup" cx="24" cy="14" r="2.9"/><circle class="glint" cx="22.2" cy="12.2" r="1.05"/></g></svg>
       </div>
       <div class="rv r-row">
         <div class="r-idx">A</div>
         <div class="r-name">Action</div>
         <p class="r-desc">Executing non-trivial operations: sliders and date-range pickers, map drawing,
           video control, real mouse-and-keyboard automation across applications.</p>
-        <svg class="eye-g" viewBox="0 0 44 28" data-eye><ellipse class="sclera" cx="22" cy="14" rx="20" ry="12"/><circle class="pup" data-pupil cx="22" cy="14" r="5"/></svg>
+        <svg class="eye-g" viewBox="0 0 48 28" data-eye><path class="lid" d="M3 14 Q24 -2 45 14 Q24 30 3 14 Z"/><g data-pupil><circle class="irs" cx="24" cy="14" r="6.4"/><circle class="pup" cx="24" cy="14" r="2.9"/><circle class="glint" cx="22.2" cy="12.2" r="1.05"/></g></svg>
       </div>
       <div class="rv r-row">
         <div class="r-idx">V</div>
         <div class="r-name">Verification</div>
         <p class="r-desc">Judge agents and rubric trees of independently checkable criteria,
           grounded in live sources — so a claim of “done” actually means done.</p>
-        <svg class="eye-g" viewBox="0 0 44 28" data-eye><ellipse class="sclera" cx="22" cy="14" rx="20" ry="12"/><circle class="pup" data-pupil cx="22" cy="14" r="5"/></svg>
+        <svg class="eye-g" viewBox="0 0 48 28" data-eye><path class="lid" d="M3 14 Q24 -2 45 14 Q24 30 3 14 Z"/><g data-pupil><circle class="irs" cx="24" cy="14" r="6.4"/><circle class="pup" cx="24" cy="14" r="2.9"/><circle class="glint" cx="22.2" cy="12.2" r="1.05"/></g></svg>
       </div>
     </div>
   </section>
@@ -550,9 +555,9 @@ footer{margin-top:clamp(80px,14vh,150px);border-top:1px solid var(--hair-strong)
   <div class="wrap">
     <p class="rv foot-motto">Lost, but<br/><span class="go">moving forward.</span></p>
     <div class="foot-eye-row" aria-hidden="true">
-      <svg width="34" height="22" viewBox="0 0 44 28" data-eye><ellipse cx="22" cy="14" rx="20" ry="12" fill="none" stroke="rgba(238,241,246,.5)" stroke-width="1.4"/><circle data-pupil cx="22" cy="14" r="4.6" fill="url(#iriGrad)"/></svg>
-      <svg width="34" height="22" viewBox="0 0 44 28" data-eye><ellipse cx="22" cy="14" rx="20" ry="12" fill="none" stroke="rgba(238,241,246,.5)" stroke-width="1.4"/><circle data-pupil cx="22" cy="14" r="4.6" fill="url(#iriGrad)"/></svg>
-      <svg width="34" height="22" viewBox="0 0 44 28" data-eye><ellipse cx="22" cy="14" rx="20" ry="12" fill="none" stroke="rgba(238,241,246,.5)" stroke-width="1.4"/><circle data-pupil cx="22" cy="14" r="4.6" fill="url(#iriGrad)"/></svg>
+      <svg width="36" height="21" viewBox="0 0 48 28" data-eye><path d="M3 14 Q24 -2 45 14 Q24 30 3 14 Z" fill="none" stroke="rgba(238,241,246,.45)" stroke-width="1.3"/><g data-pupil><circle cx="24" cy="14" r="5.6" fill="url(#iriGrad)" opacity=".9"/><circle cx="24" cy="14" r="2.5" fill="#05070b"/><circle cx="22.5" cy="12.5" r=".9" fill="#fff" opacity=".85"/></g></svg>
+      <svg width="36" height="21" viewBox="0 0 48 28" data-eye><path d="M3 14 Q24 -2 45 14 Q24 30 3 14 Z" fill="none" stroke="rgba(238,241,246,.45)" stroke-width="1.3"/><g data-pupil><circle cx="24" cy="14" r="5.6" fill="url(#iriGrad)" opacity=".9"/><circle cx="24" cy="14" r="2.5" fill="#05070b"/><circle cx="22.5" cy="12.5" r=".9" fill="#fff" opacity=".85"/></g></svg>
+      <svg width="36" height="21" viewBox="0 0 48 28" data-eye><path d="M3 14 Q24 -2 45 14 Q24 30 3 14 Z" fill="none" stroke="rgba(238,241,246,.45)" stroke-width="1.3"/><g data-pupil><circle cx="24" cy="14" r="5.6" fill="url(#iriGrad)" opacity=".9"/><circle cx="24" cy="14" r="2.5" fill="#05070b"/><circle cx="22.5" cy="12.5" r=".9" fill="#fff" opacity=".85"/></g></svg>
     </div>
     <div class="foot-bar">
       <span>© 2026 ARGUS Lab</span>
@@ -643,30 +648,45 @@ footer{margin-top:clamp(80px,14vh,150px);border-top:1px solid var(--hair-strong)
   const ctx = cv.getContext('2d');
   let W,H,DPR, eyes=[], mx=innerWidth/2, my=innerHeight/2;
   const hero = document.querySelector('.hero');
-  const COLORS = ['94,234,212','167,139,250','240,185,94','103,232,249'];
+  const PAL = ['94,234,212','103,232,249','167,139,250','240,185,94'];
+
+  /* pre-baked iris sprites: radial glow per color (cheap to draw, expensive look) */
+  const sprites = {};
+  for(const c of PAL){
+    const s = document.createElement('canvas'); s.width = s.height = 64;
+    const g = s.getContext('2d');
+    const grad = g.createRadialGradient(32,32,1,32,32,32);
+    grad.addColorStop(0,`rgba(${c},.95)`);
+    grad.addColorStop(.4,`rgba(${c},.5)`);
+    grad.addColorStop(1,`rgba(${c},0)`);
+    g.fillStyle = grad; g.fillRect(0,0,64,64);
+    sprites[c] = s;
+  }
 
   function size(){
     DPR = Math.min(devicePixelRatio||1, 2);
     W = cv.clientWidth = cv.parentElement.clientWidth;
-    H = cv.clientHeight = hero ? hero.offsetHeight + 120 : innerHeight;
+    H = hero ? hero.offsetHeight + 120 : innerHeight;
     cv.style.height = H + 'px';
     cv.width = W*DPR; cv.height = H*DPR; ctx.setTransform(DPR,0,0,DPR,0,0);
     seed();
   }
   function seed(){
     eyes = [];
-    const n = Math.min(100, Math.floor(W*H/16000));
+    const n = Math.min(100, Math.floor(W*H/15000));
     const cx = W/2, cy = H/2;
     for(let i=0;i<n;i++){
       let x,y,tries=0;
       do{ x = Math.random()*W; y = Math.random()*H; tries++; }
       while(tries<24 && Math.hypot(x-cx,y-cy) < Math.min(W,H)*0.30);
+      const rare = Math.random() < .18;                 /* a few larger, brighter eyes */
       eyes.push({x,y,
-        s: 3 + Math.random()*5.5,
-        c: COLORS[(Math.random()*COLORS.length)|0],
+        s: rare ? 7+Math.random()*4 : 3.2+Math.random()*3.4,
+        c: PAL[(Math.random()*PAL.length)|0],
         ph: Math.random()*Math.PI*2,
-        sp: .12 + Math.random()*.35,
-        blink: Math.random()*900|0
+        sp: .10 + Math.random()*.30,
+        tilt: (Math.random()-.5)*.42,
+        base: rare ? .40 : .26
       });
     }
   }
@@ -674,28 +694,49 @@ footer{margin-top:clamp(80px,14vh,150px);border-top:1px solid var(--hair-strong)
     ctx.clearRect(0,0,W,H);
     const t = tms/1000;
     for(const e of eyes){
-      /* blink cycle: mostly open, brief close */
-      const cyc = (t*e.sp + e.ph) % 6;
+      /* blink: eyelids sweep shut then open, once per ~7s cycle */
+      const cyc = (t*e.sp*1.6 + e.ph) % 7;
       let open = 1;
-      if(cyc > 5.6) open = Math.max(0, Math.cos((cyc-5.6)/.4*Math.PI/2));
-      const ry = e.s*.62*open + .35;
-      const a = .16 + .22*Math.abs(Math.sin(t*e.sp + e.ph));
-      /* eyelid */
+      if(cyc > 6.5) open = Math.abs(Math.cos((cyc-6.5)/.5*Math.PI));
+      const shimmer = e.base + .16*Math.sin(t*e.sp*2.2 + e.ph*3);
+
+      ctx.save();
+      ctx.translate(e.x, e.y); ctx.rotate(e.tilt);
+
+      /* almond lid: two quadratic arcs meeting at sharp canthi */
       ctx.beginPath();
-      ctx.ellipse(e.x, e.y, e.s, ry, 0, 0, Math.PI*2);
-      ctx.strokeStyle = `rgba(${e.c},${a})`;
-      ctx.lineWidth = 1;
-      ctx.stroke();
-      if(open > .25){
-        /* pupil looks toward cursor */
-        const ang = Math.atan2(my - e.y, mx - e.x);
-        const px = e.x + Math.cos(ang)*e.s*.34;
-        const py = e.y + Math.sin(ang)*ry*.4;
-        ctx.beginPath();
-        ctx.arc(px, py, Math.max(.7, e.s*.24), 0, Math.PI*2);
-        ctx.fillStyle = `rgba(${e.c},${a+.25})`;
-        ctx.fill();
+      ctx.moveTo(-e.s, 0);
+      ctx.quadraticCurveTo(0, -e.s*1.06*open, e.s, 0);
+      ctx.quadraticCurveTo(0,  e.s*0.84*open, -e.s, 0);
+      ctx.closePath();
+
+      if(open > .12){
+        ctx.save(); ctx.clip();
+        /* iris gazes toward the cursor (angle corrected for tilt) */
+        const ang = Math.atan2(my - e.y, mx - e.x) - e.tilt;
+        const ix = Math.cos(ang)*e.s*.32;
+        const iy = Math.sin(ang)*e.s*.22*open;
+        const ir = e.s*.66;
+        ctx.globalAlpha = Math.min(1, shimmer + .3);
+        ctx.drawImage(sprites[e.c], ix-ir, iy-ir, ir*2, ir*2);
+        ctx.globalAlpha = 1;
+        /* pupil */
+        ctx.beginPath(); ctx.arc(ix, iy, Math.max(.8, e.s*.21), 0, Math.PI*2);
+        ctx.fillStyle = 'rgba(5,7,11,.95)'; ctx.fill();
+        /* glint */
+        ctx.beginPath(); ctx.arc(ix - e.s*.11, iy - e.s*.11, Math.max(.45, e.s*.06), 0, Math.PI*2);
+        ctx.fillStyle = 'rgba(255,255,255,.85)'; ctx.fill();
+        ctx.restore();
       }
+      /* lid line on top */
+      ctx.strokeStyle = `rgba(${e.c},${shimmer + .1})`;
+      ctx.lineWidth = e.s > 6 ? 1.1 : .9;
+      ctx.stroke();
+      /* canthus dots — tiny jewel points at the corners */
+      ctx.fillStyle = `rgba(${e.c},${shimmer * .8})`;
+      ctx.beginPath(); ctx.arc(-e.s, 0, .7, 0, Math.PI*2); ctx.fill();
+      ctx.beginPath(); ctx.arc( e.s, 0, .7, 0, Math.PI*2); ctx.fill();
+      ctx.restore();
     }
     if(!reduced) requestAnimationFrame(draw);
   }
