@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>ARGUS Lab — Agents that see, act, and verify</title>
+<meta name="description" content="ARGUS Lab is an independent research group building agents that see, act, and verify — from browser agents to desktop operators." />
+<meta property="og:title" content="ARGUS Lab" />
+<meta property="og:description" content="Agents that see, act, and verify. Lost, but moving forward." />
+<link rel="icon" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><ellipse cx="32" cy="32" rx="28" ry="18" fill="none" stroke="%23e8b44a" stroke-width="4"/><circle cx="32" cy="32" r="9" fill="%23e8b44a"/><circle cx="32" cy="32" r="3.5" fill="%230a0e1a"/></svg>' />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet" />
+<style>
+:root{
+  --bg:#0a0e1a; --bg2:#0e1424; --card:#121a2e; --line:#1e2947;
+  --text:#e8ecf5; --muted:#8b96b3; --iris:#e8b44a; --iris-dim:#a97f2c;
+  --link:#8fb0ff; --good:#5eead4;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  font-family:"Inter",system-ui,sans-serif;background:var(--bg);color:var(--text);
+  line-height:1.65;-webkit-font-smoothing:antialiased;overflow-x:hidden;
+}
+::selection{background:rgba(232,180,74,.3)}
+a{color:var(--link);text-decoration:none}
+a:hover{text-decoration:underline}
+.container{max-width:1080px;margin:0 auto;padding:0 24px}
+.mono{font-family:"JetBrains Mono",monospace}
+
+/* ---------- starfield of watching eyes ---------- */
+.stars{position:fixed;inset:0;pointer-events:none;z-index:0;
+  background-image:
+    radial-gradient(1.2px 1.2px at 12% 18%, rgba(232,180,74,.55) 50%, transparent 51%),
+    radial-gradient(1px 1px at 78% 12%, rgba(143,176,255,.4) 50%, transparent 51%),
+    radial-gradient(1.4px 1.4px at 32% 74%, rgba(232,180,74,.35) 50%, transparent 51%),
+    radial-gradient(1px 1px at 64% 42%, rgba(255,255,255,.28) 50%, transparent 51%),
+    radial-gradient(1.1px 1.1px at 88% 66%, rgba(232,180,74,.45) 50%, transparent 51%),
+    radial-gradient(1px 1px at 45% 8%, rgba(255,255,255,.22) 50%, transparent 51%),
+    radial-gradient(1.3px 1.3px at 6% 55%, rgba(143,176,255,.35) 50%, transparent 51%),
+    radial-gradient(1px 1px at 55% 92%, rgba(232,180,74,.3) 50%, transparent 51%),
+    radial-gradient(1.1px 1.1px at 94% 30%, rgba(255,255,255,.25) 50%, transparent 51%),
+    radial-gradient(1px 1px at 22% 38%, rgba(232,180,74,.4) 50%, transparent 51%);
+}
+
+/* ---------- nav ---------- */
+nav{position:sticky;top:0;z-index:50;background:rgba(10,14,26,.82);backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--line)}
+nav .container{display:flex;align-items:center;justify-content:space-between;height:60px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:.06em;color:var(--text)}
+.brand:hover{text-decoration:none}
+.brand svg{display:block}
+nav ul{display:flex;gap:26px;list-style:none;font-size:.92rem}
+nav ul a{color:var(--muted);font-weight:500}
+nav ul a:hover{color:var(--text);text-decoration:none}
+@media(max-width:640px){nav ul{display:none}}
+
+/* ---------- hero ---------- */
+.hero{position:relative;z-index:1;padding:96px 0 72px;text-align:center}
+.eye{width:150px;height:96px;margin:0 auto 34px;position:relative}
+.eye .lid{position:absolute;inset:0;border-radius:50%/62%;
+  border:2.5px solid var(--iris-dim);
+  box-shadow:0 0 46px rgba(232,180,74,.16), inset 0 0 26px rgba(232,180,74,.08)}
+.eye .iris{position:absolute;left:50%;top:50%;width:56px;height:56px;transform:translate(-50%,-50%);
+  border-radius:50%;
+  background:radial-gradient(circle at 42% 38%, #f7d488 0%, var(--iris) 34%, #8a651f 72%, #3a2c10 100%);
+  box-shadow:0 0 30px rgba(232,180,74,.55);
+  animation:gaze 7s ease-in-out infinite}
+.eye .pupil{position:absolute;left:50%;top:50%;width:20px;height:20px;transform:translate(-50%,-50%);
+  border-radius:50%;background:#070a13;
+  box-shadow:inset 0 0 6px rgba(0,0,0,.9)}
+.eye .glint{position:absolute;left:38%;top:34%;width:9px;height:9px;border-radius:50%;
+  background:rgba(255,255,255,.85);filter:blur(.6px)}
+@keyframes gaze{
+  0%,100%{transform:translate(-50%,-50%)}
+  18%{transform:translate(-64%,-52%)}
+  38%{transform:translate(-38%,-46%)}
+  58%{transform:translate(-50%,-58%)}
+  78%{transform:translate(-58%,-44%)}
+}
+@media (prefers-reduced-motion: reduce){.eye .iris{animation:none}}
+.hero h1{font-size:clamp(2.6rem,7vw,4.4rem);font-weight:800;letter-spacing:.14em}
+.hero h1 .lab{color:var(--iris)}
+.hero .tagline{margin-top:14px;font-size:clamp(1.05rem,2.4vw,1.35rem);color:var(--text);font-weight:500}
+.hero .tagline b{color:var(--iris);font-weight:700}
+.hero .motto{margin-top:10px;color:var(--muted);font-style:italic;font-size:.95rem}
+.hero .myth{max-width:640px;margin:26px auto 0;color:var(--muted);font-size:.98rem}
+.hero .myth em{color:var(--text)}
+.btns{margin-top:34px;display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:11px 22px;border-radius:10px;
+  font-weight:600;font-size:.95rem;border:1px solid var(--line);color:var(--text);
+  background:var(--card);transition:transform .15s ease, border-color .15s ease}
+.btn:hover{transform:translateY(-2px);border-color:var(--iris-dim);text-decoration:none}
+.btn.gold{background:linear-gradient(135deg,#e8b44a,#c98f2a);color:#151006;border:none}
+.btn.gold:hover{filter:brightness(1.06)}
+
+/* ---------- sections ---------- */
+section{position:relative;z-index:1;padding:76px 0}
+.eyebrow{display:inline-block;font-family:"JetBrains Mono",monospace;font-size:.78rem;letter-spacing:.18em;
+  text-transform:uppercase;color:var(--iris);margin-bottom:10px}
+h2{font-size:clamp(1.5rem,3.4vw,2.1rem);font-weight:800;margin-bottom:12px}
+.lead{color:var(--muted);max-width:720px;margin-bottom:36px}
+.alt{background:var(--bg2);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+
+/* research cards */
+.grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:26px;
+  transition:border-color .2s ease, transform .2s ease}
+.card:hover{border-color:var(--iris-dim);transform:translateY(-3px)}
+.card .glyph{width:44px;height:44px;border-radius:11px;display:flex;align-items:center;justify-content:center;
+  font-size:1.3rem;margin-bottom:16px;background:rgba(232,180,74,.1);border:1px solid rgba(232,180,74,.25)}
+.card h3{font-size:1.08rem;margin-bottom:8px}
+.card p{color:var(--muted);font-size:.93rem}
+
+/* projects */
+.proj{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:18px}
+.proj .card h3{display:flex;align-items:center;gap:10px;font-size:1.2rem}
+.tag{font-family:"JetBrains Mono",monospace;font-size:.68rem;padding:3px 9px;border-radius:999px;
+  letter-spacing:.06em;font-weight:500}
+.tag.pub{background:rgba(94,234,212,.12);color:var(--good);border:1px solid rgba(94,234,212,.3)}
+.tag.dev{background:rgba(232,180,74,.1);color:var(--iris);border:1px solid rgba(232,180,74,.3)}
+.proj .links{margin-top:16px;display:flex;gap:14px;flex-wrap:wrap;font-size:.9rem}
+.proj .stats{margin-top:14px;display:flex;gap:22px;flex-wrap:wrap}
+.proj .stats div{font-size:.82rem;color:var(--muted)}
+.proj .stats b{display:block;font-size:1.15rem;color:var(--text);font-variant-numeric:tabular-nums}
+
+/* publications */
+.pub-item{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:24px 26px}
+.pub-item .venue{font-family:"JetBrains Mono",monospace;font-size:.75rem;color:var(--good);letter-spacing:.08em}
+.pub-item h3{margin:6px 0 8px;font-size:1.1rem}
+.pub-item .auth{color:var(--muted);font-size:.88rem}
+.pub-item .links{margin-top:12px;display:flex;gap:14px;flex-wrap:wrap;font-size:.88rem}
+
+/* people */
+.people{display:flex;gap:26px;flex-wrap:wrap;justify-content:center}
+.person{text-align:center;width:118px}
+.person img{width:84px;height:84px;border-radius:50%;border:2px solid var(--line);
+  transition:border-color .2s ease}
+.person:hover img{border-color:var(--iris)}
+.person a{color:var(--text)}
+.person .handle{display:block;margin-top:10px;font-size:.84rem;font-weight:600}
+.person .role{font-size:.74rem;color:var(--muted)}
+
+footer{position:relative;z-index:1;border-top:1px solid var(--line);padding:36px 0 44px;text-align:center;color:var(--muted);font-size:.88rem}
+footer .motto{font-family:"JetBrains Mono",monospace;font-style:italic;margin-top:8px;color:var(--iris-dim)}
+</style>
+</head>
+<body>
+<div class="stars" aria-hidden="true"></div>
+
+<nav>
+  <div class="container">
+    <a class="brand" href="#top">
+      <svg width="26" height="18" viewBox="0 0 64 40"><ellipse cx="32" cy="20" rx="29" ry="17" fill="none" stroke="#e8b44a" stroke-width="3.4"/><circle cx="32" cy="20" r="8.5" fill="#e8b44a"/><circle cx="32" cy="20" r="3.4" fill="#0a0e1a"/></svg>
+      ARGUS LAB
+    </a>
+    <ul>
+      <li><a href="#research">Research</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#publications">Publications</a></li>
+      <li><a href="#people">People</a></li>
+      <li><a href="https://github.com/argus-lab" target="_blank" rel="noopener">GitHub</a></li>
+    </ul>
+  </div>
+</nav>
+
+<header class="hero" id="top">
+  <div class="container">
+    <div class="eye" aria-hidden="true">
+      <div class="lid"></div>
+      <div class="iris"><div class="pupil"></div><div class="glint"></div></div>
+    </div>
+    <h1>ARGUS <span class="lab">LAB</span></h1>
+    <p class="tagline">Agents that <b>see</b>, <b>act</b>, and <b>verify</b>.</p>
+    <p class="motto mono">"Lost, but moving forward."</p>
+    <p class="myth">
+      In Greek myth, <em>Argus Panoptes</em> was the hundred-eyed watchman — some eyes always open,
+      nothing escaping his gaze. We build agents the same way: perceiving real interfaces,
+      acting across them, and verifying every step of the way.
+    </p>
+    <div class="btns">
+      <a class="btn gold" href="https://github.com/argus-lab" target="_blank" rel="noopener">GitHub Organization</a>
+      <a class="btn" href="https://warriorxu0302.github.io/CAP-Bench/" target="_blank" rel="noopener">CAP-Bench →</a>
+    </div>
+  </div>
+</header>
+
+<section id="research" class="alt">
+  <div class="container">
+    <span class="eyebrow">Research</span>
+    <h2>Three eyes on the agentic stack</h2>
+    <p class="lead">From the browser to the desktop, we study how multimodal agents understand real
+      interfaces, execute complex operations, and prove that they actually did the work.</p>
+    <div class="grid3">
+      <div class="card">
+        <div class="glyph">👁</div>
+        <h3>Perception</h3>
+        <p>Reading what interfaces actually render — charts, badges, maps, lazy-loaded and animating
+          elements — on live webpages and desktop screens.</p>
+      </div>
+      <div class="card">
+        <div class="glyph">⚡</div>
+        <h3>Action</h3>
+        <p>Executing non-trivial operations: sliders and date-range pickers, map drawing, video control,
+          and real mouse-and-keyboard automation across applications.</p>
+      </div>
+      <div class="card">
+        <div class="glyph">✓</div>
+        <h3>Verification</h3>
+        <p>Verifiable agent-as-a-judge evaluation — rubric trees of independently checkable criteria,
+          grounded in live sources, so scores mean what they claim.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="projects">
+  <div class="container">
+    <span class="eyebrow">Projects</span>
+    <h2>What we're building</h2>
+    <div class="proj">
+      <div class="card">
+        <h3>CAP-Bench <span class="tag pub">COLM 2026</span></h3>
+        <p style="color:var(--muted);font-size:.93rem;">A scalable benchmark for cross-site browser agents
+          with complex actions and perception, scored by a verifiable agent-as-a-judge framework.
+          Even the strongest agent reaches only 8.0% success.</p>
+        <div class="stats">
+          <div><b>420</b>tasks</div>
+          <div><b>108</b>websites</div>
+          <div><b>24</b>domains</div>
+          <div><b>8.0%</b>best success</div>
+        </div>
+        <div class="links">
+          <a href="https://warriorxu0302.github.io/CAP-Bench/" target="_blank" rel="noopener">Project page</a>
+          <a href="https://github.com/WarriorXu0302/CAP-Bench" target="_blank" rel="noopener">Code</a>
+          <a href="https://huggingface.co/datasets/Warrior0302/CAP-Bench" target="_blank" rel="noopener">Dataset</a>
+          <a href="https://warriorxu0302.github.io/CAP-Bench/leaderboard.html" target="_blank" rel="noopener">Leaderboard</a>
+        </div>
+      </div>
+      <div class="card">
+        <h3>Amadeus <span class="tag dev">developer preview</span></h3>
+        <p style="color:var(--muted);font-size:.93rem;">A local-first desktop operator: multimodal models
+          that watch the screen, make decisions, and act with real mouse and keyboard — learning
+          applications step by step from demonstrations and guidance.</p>
+        <div class="stats">
+          <div><b>Local</b>-first</div>
+          <div><b>3</b>platforms</div>
+          <div><b>👀</b>screen-native</div>
+        </div>
+        <div class="links">
+          <span style="color:var(--muted);font-size:.9rem;">Public release coming soon</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="publications" class="alt">
+  <div class="container">
+    <span class="eyebrow">Publications</span>
+    <h2>Papers</h2>
+    <div class="pub-item">
+      <span class="venue">COLM 2026</span>
+      <h3>CAP: A Scalable Benchmark for Evaluating Cross-Site Browser Agents with Complex Actions and Perception</h3>
+      <p class="auth">Zejun Xu*, Taiyi Chen*, Jin Li*, Yongtong Gu*, Qi Cheng, Aixuan Lv, Shuai Zhu, Pengfei Zhu,
+        Kaichen Yang, Boyu Sun, Yixian Yang, Mulong Xie, Xin Liu, Dagang Li<sup>&#9993;</sup>, Xiaoteng Ma<sup>&#9993;</sup>, Hongru Wang<sup>&#9993;</sup></p>
+      <div class="links">
+        <a href="https://openreview.net/forum?id=Q0pFLVle7J" target="_blank" rel="noopener">OpenReview</a>
+        <a href="https://warriorxu0302.github.io/CAP-Bench/" target="_blank" rel="noopener">Project page</a>
+        <a href="https://github.com/WarriorXu0302/CAP-Bench" target="_blank" rel="noopener">Code</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="people">
+  <div class="container">
+    <span class="eyebrow">People</span>
+    <h2>The eyes of Argus</h2>
+    <p class="lead">A small, independent group — lost, but moving forward.</p>
+    <div class="people">
+      <div class="person">
+        <a href="https://github.com/WarriorXu0302" target="_blank" rel="noopener">
+          <img src="https://avatars.githubusercontent.com/u/211244072?v=4" alt="Warrior Xu" loading="lazy" />
+          <span class="handle">Warrior Xu</span>
+        </a>
+        <span class="role">@WarriorXu0302</span>
+      </div>
+      <div class="person">
+        <a href="https://github.com/kynali" target="_blank" rel="noopener">
+          <img src="https://avatars.githubusercontent.com/u/71322430?v=4" alt="kynali" loading="lazy" />
+          <span class="handle">kynali</span>
+        </a>
+        <span class="role">@kynali</span>
+      </div>
+      <div class="person">
+        <a href="https://github.com/ln172" target="_blank" rel="noopener">
+          <img src="https://avatars.githubusercontent.com/u/101444324?v=4" alt="ln172" loading="lazy" />
+          <span class="handle">ln172</span>
+        </a>
+        <span class="role">@ln172</span>
+      </div>
+      <div class="person">
+        <a href="https://github.com/QINYZ123" target="_blank" rel="noopener">
+          <img src="https://avatars.githubusercontent.com/u/296359024?v=4" alt="QINYZ123" loading="lazy" />
+          <span class="handle">QINYZ123</span>
+        </a>
+        <span class="role">@QINYZ123</span>
+      </div>
+      <div class="person">
+        <a href="https://github.com/4685186" target="_blank" rel="noopener">
+          <img src="https://avatars.githubusercontent.com/u/44164974?v=4" alt="c4685186" loading="lazy" />
+          <span class="handle">c4685186</span>
+        </a>
+        <span class="role">@4685186</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <p><a href="https://github.com/argus-lab" target="_blank" rel="noopener">github.com/argus-lab</a></p>
+    <p class="motto">El. Psy. Kongroo. — lost, but moving forward.</p>
+  </div>
+</footer>
+</body>
+</html>
